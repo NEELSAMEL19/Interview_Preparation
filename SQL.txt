@@ -1,0 +1,664 @@
+## 🟢 BEGINNER LEVEL
+
+### 1. Database Basics (Basic Level)
+- How do you create a new database for a company project?
+- How do you select a specific database to start working on it?
+- How can you view all available databases in a system?
+- How would you permanently remove a database and what are the risks involved?
+- What is the difference between a database and a table?
+
+1.CREATE DATABASE company_db;
+2.USE company_db;
+3.SHOW DATABASES;
+4.DROP DATABASE company_db;
+5.
+| Database                              | Table                   |
+| ------------------------------------- | ----------------------- |
+| Collection of data storage containers | Stores actual data      |
+| Like a folder                         | Like an Excel sheet     |
+| Contains multiple tables              | Contains rows & columns |
+| Example: company_db                   | employees table         |
+
+
+### 2. Table Operations (Basic Level)
+- How do you create a table for storing employee information in a company?
+- How do you check the structure of a table in a database?
+- How do you add a new column to an existing employee table (e.g., email)?
+- How do you remove a column from an existing table safely?
+- What steps would you take to modify an existing table structure without deleting it?
+- How can you change the data type of a column in a live production table?
+- What is the difference between altering a table and dropping a table?
+
+1.CREATE TABLE employees (
+	emp_id INT PRIMARY KEY AUTO_INCREMENT,
+    	name VARCHAR(100),
+    	salary DECIMAL(10,2),
+   	department VARCHAR(50)
+	);
+2.DESC employees OR DESCRIBE employees;;
+3.ALTER TABLE employees ADD email VARCHAR(100);
+4.ALTER TABLE employees DROP COLUMN email;
+5.ALTER TABLE employees MODIFY salary DECIMAL(12,2);
+6.ALTER TABLE employees MODIFY name VARCHAR(150);
+7.
+| Action      | Meaning                 | Impact            |
+| ----------- | ----------------------- | ----------------- |
+| ALTER TABLE | Modify structure        | Safe (data stays) |
+| DROP TABLE  | Delete table completely | Data lost forever |
+
+
+### 3. CRUD Operations (Medium Level)
+#### CREATE (INSERT)
+- How would you add a new employee record into the database?
+- How do you insert multiple employee records in one operation?
+- What precautions should you take while inserting data into a table?
+
+1.INSERT INTO employees (first_name, last_name, email, salary, hire_date, dept_id)
+VALUES ('Neel', 'Samel', 'neel@gmail.com', 50000, '2024-01-01', 1);
+2.INSERT INTO employees (first_name, last_name, email, salary, hire_date, dept_id)
+VALUES 
+('Amit', 'Shah', 'amit@gmail.com', 60000, '2023-05-10', 2),
+('Riya', 'Patel', 'riya@gmail.com', 55000, '2023-07-15', 3);	
+3. Precautions while inserting data:
+Ensure correct data types
+Follow column order
+Avoid violating constraints (UNIQUE, NOT NULL, FK)
+Validate data before inserting
+Use transactions in critical systems
+
+#### READ (SELECT)
+- How do you retrieve all employee records from a table?
+- How do you fetch only specific columns like name and salary?
+- How do you find details of a specific employee using their ID?
+- How do you extract data for reporting purposes from a large table?
+
+1.SELECT * FROM employees;
+2.SELECT first_name, salary FROM employees;
+3.SELECT * FROM employees WHERE emp_id = 1;
+4.SELECT first_name, salary FROM employees WHERE salary > 60000 ORDER BY salary DESC;
+
+#### UPDATE
+- How do you update the salary of a specific employee?
+- How would you update multiple employees at once based on department?
+- What can go wrong if you forget to use a condition while updating data?
+
+1.UPDATE employees
+SET salary = 70000
+WHERE emp_id = 1;
+2.UPDATE employees
+SET salary = salary + 5000
+WHERE dept_id = 2;
+3.UPDATE employees SET salary = 0;
+
+#### DELETE
+- How do you delete a specific employee record from the database?
+- How do you remove all employees belonging to a specific department?
+- What is the difference between deleting a record and dropping a table?
+- What precautions should be taken before running a DELETE operation?
+
+1.DELETE FROM employees
+WHERE emp_id = 1;
+2.DELETE FROM employees
+WHERE dept_id = 3;
+3.
+| DELETE                     | DROP TABLE             |
+| -------------------------- | ---------------------- |
+| Removes specific rows      | Deletes entire table   |
+| Can use WHERE              | No condition           |
+| Table structure remains    | Structure also deleted |
+| Can rollback (transaction) | Cannot rollback easily |
+4.
+Always use WHERE condition
+Take backup
+
+### 4. Filtering & Sorting (Medium Level)
+#### Filtering (WHERE Clause)
+- How do you filter employees based on salary greater than a certain value?
+- How do you find employees working in a specific department?
+- How do you retrieve employees whose age is within a certain range?
+- How do you filter data based on multiple cities?
+- How do you find employees whose names start with a specific letter?
+- How do you exclude certain salary values from results?
+- What is the difference between AND and OR conditions in filtering?
+
+#### Sorting (ORDER BY)
+- How do you sort employees by salary in ascending order?
+- How do you display employees from highest salary to lowest?
+- How do you sort employees by department and then salary?
+- How do you get only the top 5 highest-paid employees?
+- How do sorting and filtering work together in real projects?
+- What happens if ORDER BY is not used in a query?
+
+### 5. Real-World Scenario Questions
+- You are building an HR system — how would you structure employee data?
+- How would you find employees eligible for a salary hike?
+- How would you detect duplicate employee records in a table?
+- How would you prepare a report of employees grouped by department?
+- How would you design a table for a startup managing employees and salaries?
+- How would you ensure data safety before deleting or updating records in production?
+
+---
+
+## 🟡 CORE SQL
+*Focus: Essential SQL operations for data manipulation and analysis*
+
+### 1. Joins (Medium Level) ⭐ MUST-PRACTICE
+- You have two tables: employees and departments. How would you retrieve each employee along with their department name?
+- In a company database, some employees are not assigned to any department. How would you list all employees, including those without a department?
+- How would you find all departments, even if no employees are assigned to them?
+- You are working on an e-commerce system. How would you combine customers and orders to show customer details along with their orders?
+- How would you identify employees who do not belong to any department?
+- How would you fetch only matching records between two tables (employees and projects)?
+- In a sales system, how would you show all products and their sales, including products that were never sold?
+
+### 2. Aggregations (Medium Level) ⭐ MUST-PRACTICE
+- How would you find the total number of employees in a company?
+- How would you calculate the total salary paid by the company every month?
+- How would you find the average salary in each department?
+- How would you identify the highest-paid employee in the organization?
+- How would you find the lowest salary in the HR department?
+- How would you count how many orders each customer has placed?
+- How would you calculate total revenue from all sales?
+- How would you find the average order value in an e-commerce platform?
+
+### 3. Grouping (Medium Level) ⭐ MUST-PRACTICE
+- How would you group employees by department and calculate total employees in each department?
+- How would you find departments where more than 5 employees are working?
+- How would you group sales data by product and calculate total sales per product?
+- How would you filter departments where the average salary is greater than 60,000?
+- How would you find the number of employees in each city?
+- How would you group orders by customer and filter only those customers who placed more than 3 orders?
+- How would you identify departments with high payroll costs?
+
+### 4. Subqueries (Medium Level) ⭐ MUST-PRACTICE
+- How would you find employees whose salary is higher than the company average?
+- How would you find the employee who earns the second highest salary?
+- How would you find employees who work in the same department as 'Rahul'?
+- How would you identify customers who have never placed an order?
+- How would you find products that have never been sold?
+- How would you get employees who earn more than the average salary of their department?
+- How would you find the top 3 highest-paid employees without using LIMIT directly?
+- How would you check if a record exists in another table before inserting data?
+
+### 5. Real-World Mix Scenarios ⭐ MUST-PRACTICE
+- In an HR system, how would you generate a report showing: Employee name, Department, Total employees in that department?
+- In an e-commerce system, how would you find: Customers who spent more than average order value?
+- In a banking system, how would you find: Branches with total transactions above a certain threshold?
+- In a company payroll system, how would you identify: Departments where salary cost is above company average?
+- In a job portal, how would you find: Companies that posted more than 10 jobs?
+
+---
+
+## 🔵 DATABASE DESIGN
+*Focus: Designing efficient and scalable database structures*
+
+### 1. Relationships (Basic Level)
+- You are designing an e-commerce system. How would you connect customers and orders in a database?
+- In a school system, how would you design the relationship between students and classes?
+- A company has employees and projects. How would you model the relationship if one employee can work on multiple projects and one project has multiple employees?
+- How would you design a system where one user can post many posts in a social media app?
+- In a banking system, how would you relate customers and accounts?
+- How would you represent a relationship where one department has many employees, but each employee belongs to only one department?
+- How would you design a product-review system where one product has many reviews and one customer can write many reviews?
+- How would you handle a scenario where relationships are optional (e.g., employee may or may not have a manager)?
+
+### 2. Normalization (Medium Level) ⭐ MUST-PRACTICE
+- You are given a table that stores customer orders with repeated product and customer data. How would you improve its design?
+- What problems arise if you store employee and department data in a single table?
+- How would you eliminate duplicate data in a poorly designed database?
+- You notice update anomalies in a table (same data repeated in multiple rows). How would you fix it?
+- In an order system, why is it bad to store multiple product names in one column?
+- How would you break a large table into smaller logical tables?
+- What is the benefit of normalization in a real production system?
+- When would you intentionally avoid normalization (denormalization)?
+- How would you identify if a database is not normalized?
+- In a student database, how would you avoid repeating class teacher information for every student?
+
+### 3. Constraints (Medium Level) ⭐ MUST-PRACTICE
+- How would you ensure that every employee must have a unique ID in a database?
+- How would you prevent duplicate email addresses in a user table?
+- How would you ensure that a salary cannot be negative in an employee table?
+- How would you make sure that every order must belong to a valid customer?
+- What happens if a foreign key relationship is violated in a system?
+- How would you enforce that a product price is always greater than zero?
+- How would you design a system where a column cannot be empty (mandatory fields)?
+- How would you ensure referential integrity between orders and customers?
+- What is the difference between primary key and unique constraint in real-world usage?
+- How would constraints help prevent data corruption in production systems?
+
+### 4. Real-World System Design Scenarios
+- Design a database for an online food delivery app (Zomato-like). What relationships will you create?
+- Design a library system where books can be issued to students. How will you structure relationships?
+- Design a hospital system where patients, doctors, and appointments are involved.
+- Design a ride-booking system (Uber-like). What entities and relationships will you create?
+- Design a job portal database where companies post jobs and candidates apply.
+- How would you ensure data consistency in a financial banking system?
+- If a database is growing to millions of records, how would normalization and constraints help maintain performance and integrity?
+
+---
+
+## 🔴 ADVANCED SQL
+*Focus: Complex queries, performance, and enterprise-level concepts*
+
+### 1. Transactions (Medium Level) ⭐ MUST-PRACTICE
+- You are transferring money between two bank accounts. How do you ensure the system does not lose money if the system crashes midway?
+- What will happen if only half of a multi-step transaction completes successfully in a payment system?
+- In an e-commerce checkout system, how would you ensure that order creation and payment deduction happen together safely?
+- How would you handle a scenario where two users try to book the last available flight seat at the same time?
+- What does it mean if a transaction is rolled back in a banking system?
+- Why is atomicity important in financial applications?
+- How would you ensure consistency in a system where multiple tables are updated together?
+- What problems arise if a system does not support transactions?
+
+### 2. Locks & Concurrency (Medium Level) ⭐ MUST-PRACTICE
+- Two users are updating the same product stock at the same time. How do you prevent incorrect inventory?
+- What is the risk of multiple users reading and updating the same row simultaneously?
+- In a ticket booking system, how do you ensure only one user books the same seat?
+- What is a deadlock situation in a database?
+- How would you detect and resolve deadlocks in a production system?
+- Why do locks slow down performance in high-traffic systems?
+- What is the difference between optimistic and pessimistic locking in real systems?
+- How would you handle concurrency in a payment gateway system?
+
+### 3. Window Functions (Medium Level) ⭐ MUST-PRACTICE
+- How would you rank employees based on salary within each department?
+- How would you find the top 3 highest-paid employees in each department?
+- In a sales system, how would you calculate running total revenue over time?
+- How would you compare each employee's salary with the average salary of their department?
+- How would you identify the second highest salary in each department?
+- In a leaderboard system, how would you assign ranks to players without gaps?
+- How would you calculate cumulative sales per month in a dashboard?
+- Why are window functions better than subqueries in analytics systems?
+
+### 4. CTEs (Common Table Expressions) (Medium Level)
+- You have a very complex query with multiple joins. How would you simplify it for better readability?
+- How would you break a multi-step reporting logic into smaller logical parts?
+- In a recursive system (like org hierarchy), how would you fetch all reporting employees under a manager?
+- How would you reuse intermediate results in a query without creating temporary tables?
+- Why are CTEs useful in debugging complex SQL queries?
+- When would CTEs be better than subqueries?
+- Can CTEs improve performance or only readability?
+
+### 5. Performance Tuning (Medium Level) ⭐ MUST-PRACTICE
+- A query is taking 20 seconds to execute on a large table. How would you approach debugging it?
+- How would you identify slow queries in a production database?
+- What steps would you take to optimize a dashboard that loads very slowly?
+- Why might adding indexes sometimes NOT improve performance?
+- How would you handle performance issues in a table with millions of records?
+- What is the impact of full table scans in large systems?
+- How would caching interact with database performance?
+- How would you optimize a report that joins 5-6 large tables?
+
+### 6. Security (Medium Level)
+- How would you restrict a junior employee from accessing salary data?
+- In a banking system, how do you ensure only authorized users can view account balances?
+- What is the difference between giving full database access vs limited table access?
+- How would you revoke access from a user who left the company?
+- How do roles help in managing database security at scale?
+- How would you prevent accidental data modification by non-admin users?
+- Why is database-level security important even if application security exists?
+- How would you design a system where different teams see different data from the same table?
+
+### 7. Real-World Mix Scenarios ⭐ MUST-PRACTICE
+- You are building an Uber-like system. How do you handle concurrency when multiple users book nearby rides?
+- In a stock trading system, how would you ensure no race condition occurs during buy/sell transactions?
+- In an analytics system, how would you combine window functions + CTEs for reporting dashboards?
+- How would you design a system where thousands of transactions happen per second without data inconsistency?
+- In a SaaS platform, how would you secure customer data using GRANT/REVOKE?
+- How would you tune a slow financial reporting system used by executives?
+- How would you ensure zero data loss in a failed transaction system?
+
+---
+
+## 🟠 PROFESSIONAL SQL
+*Focus: Database objects, optimization, and enterprise features*
+
+### 1. Indexing (Medium Level) ⭐ MUST-PRACTICE
+- Your application is slow when searching employees by name. How would you improve performance?
+- When would you decide to create an index in a table, and when would you avoid it?
+- In an e-commerce system, product search is slow. What database-level change would you suggest?
+- Why might adding too many indexes slow down INSERT and UPDATE operations?
+- How would you optimize a query that is scanning millions of rows?
+- In a banking system, account lookup must be very fast. How would you design indexing strategy?
+- What is the trade-off between read performance and write performance when using indexes?
+- How would you detect if an index is actually being used or ignored?
+- Why does a query sometimes perform worse even after adding an index?
+- How would indexing help in large reporting systems (like analytics dashboards)?
+
+### 2. Views (Medium Level)
+- Your HR team only needs employee name and department, but not salary. How would you safely provide this data?
+- How would you simplify a complex query that joins multiple tables for reporting?
+- In a banking system, how would you restrict users from seeing sensitive data like account balance?
+- When would you use a view instead of directly querying tables?
+- Can a view improve performance or only simplify queries?
+- How would you handle a scenario where multiple teams need different versions of the same data?
+- What happens if underlying table data changes — does the view change automatically?
+- Why are views useful in large enterprise applications?
+
+### 3. Stored Procedures (Medium Level) ⭐ MUST-PRACTICE
+- You need to execute a complex set of operations (insert + update + validation). Where would you place this logic — application or database?
+- How would you ensure consistent salary update logic across multiple applications?
+- In a banking system, how would you handle money transfer between two accounts safely?
+- Why would companies move business logic into stored procedures instead of application code?
+- How would stored procedures help reduce network traffic?
+- What risks come with putting too much logic inside stored procedures?
+- How would you handle version changes in stored procedures in production?
+- How do stored procedures improve security in enterprise systems?
+
+### 4. Triggers (Medium Level)
+- How would you automatically log changes whenever an employee salary is updated?
+- In an audit system, how would you track who deleted or modified a record?
+- How would you enforce a rule like "whenever an order is placed, update inventory automatically"?
+- What are the risks of using triggers in large systems?
+- How would you prevent accidental data modification using triggers?
+- In a banking system, how would you automatically record every transaction?
+- What is the difference between triggers and stored procedures in real usage?
+- Can triggers cause performance issues? In what scenarios?
+- How would you debug a system where unexpected data changes are happening due to triggers?
+
+### 5. Real-World Mix Scenarios ⭐ MUST-PRACTICE
+- You are designing a high-traffic e-commerce system. How would you combine indexing, views, and stored procedures for performance?
+- In a fintech system, how would you ensure security, performance, and auditability using SQL features?
+- How would you design a reporting system where users query millions of records quickly?
+- In a ride-booking system, how would triggers help maintain real-time data consistency?
+- How would you balance between application logic and database logic in a large-scale system?
+- What happens if indexes and triggers are not properly designed in production systems?
+- How would you optimize a slow dashboard used by company executives?
+
+---
+
+## 🎯 TOP 20 MOST IMPORTANT INTERVIEW QUESTIONS
+
+1. **Joins**: You have two tables: employees and departments. How would you retrieve each employee along with their department name?
+2. **Subqueries**: How would you find employees whose salary is higher than the company average?
+3. **Aggregations**: How would you find the total number of employees in a company?
+4. **Grouping**: How would you group employees by department and calculate total employees in each department?
+5. **Transactions**: You are transferring money between two bank accounts. How do you ensure the system does not lose money if the system crashes midway?
+6. **Indexing**: Your application is slow when searching employees by name. How would you improve performance?
+7. **Normalization**: You are given a table that stores customer orders with repeated product and customer data. How would you improve its design?
+8. **Constraints**: How would you ensure that every employee must have a unique ID in a database?
+9. **Window Functions**: How would you rank employees based on salary within each department?
+10. **Stored Procedures**: In a banking system, how would you handle money transfer between two accounts safely?
+11. **Concurrency**: Two users are updating the same product stock at the same time. How do you prevent incorrect inventory?
+12. **Views**: Your HR team only needs employee name and department, but not salary. How would you safely provide this data?
+13. **Performance Tuning**: A query is taking 20 seconds to execute on a large table. How would you approach debugging it?
+14. **Relationships**: A company has employees and projects. How would you model the relationship if one employee can work on multiple projects and one project has multiple employees?
+15. **Security**: How would you restrict a junior employee from accessing salary data?
+16. **CTEs**: You have a very complex query with multiple joins. How would you simplify it for better readability?
+17. **Triggers**: How would you automatically log changes whenever an employee salary is updated?
+18. **CRUD Operations**: How do you update the salary of a specific employee?
+19. **Filtering**: How do you filter employees based on salary greater than a certain value?
+20. **Real-World Scenario**: In an e-commerce system, how would you find customers who spent more than average order value?
+
+---
+
+## 📅 12-DAY LEARNING PLAN
+
+### **Days 1-2: Beginner Level**
+- **Day 1**: Database Basics + Table Operations (2-3 hours practice)
+- **Day 2**: CRUD Operations (INSERT, SELECT, UPDATE, DELETE) (3-4 hours practice)
+
+### **Days 3-4: Core SQL Fundamentals**
+- **Day 3**: Filtering, Sorting + Basic Joins (3-4 hours practice)
+- **Day 4**: Aggregations, Grouping, Subqueries (4-5 hours practice)
+
+### **Days 5-6: Database Design**
+- **Day 5**: Relationships + Normalization (3-4 hours practice)
+- **Day 6**: Constraints + Design Scenarios (3-4 hours practice)
+
+### **Days 7-8: Advanced Concepts**
+- **Day 7**: Transactions, Locks & Concurrency (4-5 hours practice)
+- **Day 8**: Window Functions, CTEs (4-5 hours practice)
+
+### **Days 9-10: Professional Features**
+- **Day 9**: Indexing, Views, Stored Procedures (4-5 hours practice)
+- **Day 10**: Triggers, Performance Tuning, Security (4-5 hours practice)
+
+### **Days 11-12: Integration & Practice**
+- **Day 11**: Real-world scenarios from all sections (4-5 hours practice)
+- **Day 12**: Top 20 interview questions + mock interviews (4-5 hours practice)
+
+
+## 🗄️ SAMPLE DATABASE FOR PRACTICE
+
+### **Database Schema: Company Management System**
+
+#### **1. departments**
+```sql
+CREATE TABLE departments (
+    dept_id INT PRIMARY KEY AUTO_INCREMENT,
+    dept_name VARCHAR(50) NOT NULL,
+    location VARCHAR(50),
+    budget DECIMAL(10,2)
+);
+```
+
+#### **2. employees**
+```sql
+CREATE TABLE employees (
+    emp_id INT PRIMARY KEY AUTO_INCREMENT,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    salary DECIMAL(10,2) CHECK (salary > 0),
+    hire_date DATE NOT NULL,
+    dept_id INT,
+    manager_id INT,
+    FOREIGN KEY (dept_id) REFERENCES departments(dept_id),
+    FOREIGN KEY (manager_id) REFERENCES employees(emp_id)
+);
+```
+
+#### **3. projects**
+```sql
+CREATE TABLE projects (
+    project_id INT PRIMARY KEY AUTO_INCREMENT,
+    project_name VARCHAR(100) NOT NULL,
+    start_date DATE,
+    end_date DATE,
+    budget DECIMAL(12,2)
+);
+```
+
+#### **4. employee_projects** (Junction table for many-to-many relationship)
+```sql
+CREATE TABLE employee_projects (
+    emp_id INT,
+    project_id INT,
+    role VARCHAR(50),
+    assigned_date DATE,
+    PRIMARY KEY (emp_id, project_id),
+    FOREIGN KEY (emp_id) REFERENCES employees(emp_id),
+    FOREIGN KEY (project_id) REFERENCES projects(project_id)
+);
+```
+
+#### **5. customers**
+```sql
+CREATE TABLE customers (
+    customer_id INT PRIMARY KEY AUTO_INCREMENT,
+    customer_name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE,
+    phone VARCHAR(20),
+    city VARCHAR(50)
+);
+```
+
+#### **6. orders**
+```sql
+CREATE TABLE orders (
+    order_id INT PRIMARY KEY AUTO_INCREMENT,
+    customer_id INT NOT NULL,
+    order_date DATE NOT NULL,
+    total_amount DECIMAL(10,2),
+    status VARCHAR(20),
+    FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
+);
+```
+
+#### **7. products**
+```sql
+CREATE TABLE products (
+    product_id INT PRIMARY KEY AUTO_INCREMENT,
+    product_name VARCHAR(100) NOT NULL,
+    price DECIMAL(8,2) CHECK (price > 0),
+    category VARCHAR(50),
+    stock_quantity INT DEFAULT 0
+);
+```
+
+#### **8. order_items**
+```sql
+CREATE TABLE order_items (
+    order_id INT,
+    product_id INT,
+    quantity INT NOT NULL,
+    unit_price DECIMAL(8,2),
+    PRIMARY KEY (order_id, product_id),
+    FOREIGN KEY (order_id) REFERENCES orders(order_id),
+    FOREIGN KEY (product_id) REFERENCES products(product_id)
+);
+```
+
+### **Table Relationships Explanation**
+
+**Primary Keys (PK):**
+- `departments.dept_id` - Uniquely identifies each department
+- `employees.emp_id` - Uniquely identifies each employee
+- `projects.project_id` - Uniquely identifies each project
+- `customers.customer_id` - Uniquely identifies each customer
+- `orders.order_id` - Uniquely identifies each order
+- `products.product_id` - Uniquely identifies each product
+
+**Foreign Keys (FK):**
+- `employees.dept_id` → `departments.dept_id` (Many employees belong to one department)
+- `employees.manager_id` → `employees.emp_id` (Self-referencing for hierarchical structure)
+- `employee_projects.emp_id` → `employees.emp_id` (Many-to-many relationship)
+- `employee_projects.project_id` → `projects.project_id` (Many-to-many relationship)
+- `orders.customer_id` → `customers.customer_id` (Many orders belong to one customer)
+- `order_items.order_id` → `orders.order_id` (One order has many items)
+- `order_items.product_id` → `products.product_id` (Many orders can contain same product)
+
+**Relationship Types:**
+- **One-to-Many**: departments ↔ employees, customers ↔ orders, orders ↔ order_items
+- **Many-to-Many**: employees ↔ projects (via junction table employee_projects)
+- **Self-Referencing**: employees.manager_id (for organizational hierarchy)
+
+### **Sample Data (5-10 rows per table)**
+
+#### **departments**
+```sql
+INSERT INTO departments (dept_name, location, budget) VALUES
+('Engineering', 'New York', 500000.00),
+('Sales', 'Los Angeles', 300000.00),
+('HR', 'Chicago', 150000.00),
+('Marketing', 'Miami', 200000.00),
+('Finance', 'Boston', 250000.00);
+```
+
+#### **employees**
+```sql
+INSERT INTO employees (first_name, last_name, email, salary, hire_date, dept_id, manager_id) VALUES
+('John', 'Doe', 'john.doe@company.com', 75000.00, '2020-01-15', 1, NULL),
+('Jane', 'Smith', 'jane.smith@company.com', 80000.00, '2019-03-20', 1, 1),
+('Bob', 'Johnson', 'bob.johnson@company.com', 65000.00, '2021-06-10', 2, NULL),
+('Alice', 'Williams', 'alice.williams@company.com', 70000.00, '2020-09-05', 2, 3),
+('Charlie', 'Brown', 'charlie.brown@company.com', 55000.00, '2022-01-20', 3, NULL),
+('Diana', 'Davis', 'diana.davis@company.com', 60000.00, '2021-11-15', 4, NULL),
+('Eve', 'Miller', 'eve.miller@company.com', 72000.00, '2018-07-30', 5, NULL),
+('Frank', 'Wilson', 'frank.wilson@company.com', 68000.00, '2020-12-01', 1, 1);
+```
+
+#### **projects**
+```sql
+INSERT INTO projects (project_name, start_date, end_date, budget) VALUES
+('Website Redesign', '2024-01-01', '2024-06-30', 150000.00),
+('Mobile App Development', '2024-02-01', '2024-08-31', 200000.00),
+('Data Analytics Platform', '2024-03-01', '2024-12-31', 300000.00),
+('CRM System', '2024-01-15', '2024-09-15', 180000.00),
+('AI Chatbot', '2024-04-01', '2024-10-31', 120000.00);
+```
+
+#### **employee_projects**
+```sql
+INSERT INTO employee_projects (emp_id, project_id, role, assigned_date) VALUES
+(1, 1, 'Project Manager', '2024-01-01'),
+(2, 1, 'Senior Developer', '2024-01-01'),
+(1, 2, 'Technical Lead', '2024-02-01'),
+(2, 2, 'Developer', '2024-02-01'),
+(3, 4, 'Business Analyst', '2024-01-15'),
+(4, 4, 'Sales Rep', '2024-01-15'),
+(5, 3, 'Data Analyst', '2024-03-01'),
+(6, 5, 'Marketing Specialist', '2024-04-01');
+```
+
+#### **customers**
+```sql
+INSERT INTO customers (customer_name, email, phone, city) VALUES
+('TechCorp Inc', 'contact@techcorp.com', '555-0101', 'New York'),
+('Global Solutions', 'info@globalsolutions.com', '555-0102', 'Los Angeles'),
+('Innovate Ltd', 'hello@innovate.com', '555-0103', 'Chicago'),
+('Future Systems', 'support@futuresystems.com', '555-0104', 'Miami'),
+('Smart Tech', 'sales@smarttech.com', '555-0105', 'Boston'),
+('DataFlow Corp', 'admin@dataflow.com', '555-0106', 'Seattle'),
+('CloudNine Inc', 'info@cloudnine.com', '555-0107', 'Austin');
+```
+
+#### **products**
+```sql
+INSERT INTO products (product_name, price, category, stock_quantity) VALUES
+('Laptop Pro', 1299.99, 'Electronics', 50),
+('Wireless Mouse', 29.99, 'Electronics', 200),
+('Office Chair', 199.99, 'Furniture', 30),
+('Coffee Maker', 79.99, 'Appliances', 75),
+('Notebook Set', 12.99, 'Stationery', 500),
+('Monitor 27"', 349.99, 'Electronics', 25),
+('Desk Lamp', 45.99, 'Furniture', 60),
+('Water Bottle', 19.99, 'Accessories', 150);
+```
+
+#### **orders**
+```sql
+INSERT INTO orders (customer_id, order_date, total_amount, status) VALUES
+(1, '2024-01-15', 1329.98, 'Completed'),
+(2, '2024-01-20', 229.98, 'Completed'),
+(3, '2024-02-01', 199.99, 'Processing'),
+(1, '2024-02-10', 389.98, 'Completed'),
+(4, '2024-02-15', 92.98, 'Shipped'),
+(5, '2024-03-01', 349.99, 'Completed'),
+(2, '2024-03-05', 65.98, 'Processing'),
+(6, '2024-03-10', 569.97, 'Completed');
+```
+
+#### **order_items**
+```sql
+INSERT INTO order_items (order_id, product_id, quantity, unit_price) VALUES
+(1, 1, 1, 1299.99),
+(1, 2, 1, 29.99),
+(2, 4, 1, 79.99),
+(2, 8, 2, 19.99),
+(3, 3, 1, 199.99),
+(4, 6, 1, 349.99),
+(4, 7, 1, 45.99),
+(5, 5, 3, 12.99),
+(5, 8, 2, 19.99),
+(6, 6, 1, 349.99),
+(7, 5, 5, 12.99),
+(8, 1, 1, 1299.99),
+(8, 3, 1, 199.99),
+(8, 4, 1, 79.99);
+```
+
+**Practice Tips:**
+
+---
+## 🔧 ADDITIONAL TOPICS TO CONSIDER
+
+### **Optional Advanced Topics** (Add if you want complete mastery)
+- **Set Operations**: UNION, INTERSECT, EXCEPT for combining result sets
+- **Built-in Functions**: String functions (CONCAT, SUBSTRING), Date functions (DATEADD, DATEDIFF), Mathematical functions
+- **CASE Statements**: Conditional logic in SELECT queries
+- **Temporary Tables**: For complex multi-step operations
+- **Data Types**: Detailed coverage of VARCHAR, INT, DECIMAL, DATE, etc.
+- **Backup & Recovery**: Database maintenance and disaster recovery
+- **Database Administration**: User management, permissions, monitoring
